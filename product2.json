@@ -1,0 +1,144 @@
+[
+  {
+    "id": 1,
+    "mobile_device_model": "alcatel OT-111",
+    "price_inr": 1660,
+    "description": "Compact and durable feature phone designed for basic calling and messaging.",
+    "image": "https://via.placeholder.com/300x300?text=alcatel+OT-111"
+  },
+  {
+    "id": 2,
+    "mobile_device_model": "BLU Energy X Plus 2",
+    "price_inr": 621,
+    "description": "Affordable smartphone with a long-lasting battery and smooth daily performance.",
+    "image": "https://via.placeholder.com/300x300?text=BLU+Energy+X+Plus+2"
+  },
+  {
+    "id": 3,
+    "mobile_device_model": "Samsung D550",
+    "price_inr": 6639,
+    "description": "Stylish Samsung feature phone offering reliability and a premium feel.",
+    "image": "https://via.placeholder.com/300x300?text=Samsung+D550"
+  },
+  {
+    "id": 4,
+    "mobile_device_model": "Asus PadFone Infinity",
+    "price_inr": 331,
+    "description": "Innovative hybrid device combining smartphone and tablet functionality.",
+    "image": "https://via.placeholder.com/300x300?text=Asus+PadFone+Infinity"
+  },
+  {
+    "id": 5,
+    "mobile_device_model": "BLU Life Play S",
+    "price_inr": 1244,
+    "description": "Mid-range smartphone with vibrant display and solid multimedia experience.",
+    "image": "https://via.placeholder.com/300x300?text=BLU+Life+Play+S"
+  },
+  {
+    "id": 6,
+    "mobile_device_model": "Siemens C35i",
+    "price_inr": 3817,
+    "description": "Classic rugged phone known for durability and long battery life.",
+    "image": "https://via.placeholder.com/300x300?text=Siemens+C35i"
+  },
+  {
+    "id": 7,
+    "mobile_device_model": "BLU Studio J8 LTE",
+    "price_inr": 1078,
+    "description": "LTE-enabled smartphone suitable for browsing, calling, and media use.",
+    "image": "https://via.placeholder.com/300x300?text=BLU+Studio+J8+LTE"
+  },
+  {
+    "id": 8,
+    "mobile_device_model": "Oppo Reno Ace",
+    "price_inr": 290,
+    "description": "High-performance Oppo smartphone featuring fast charging technology.",
+    "image": "https://via.placeholder.com/300x300?text=Oppo+Reno+Ace"
+  },
+  {
+    "id": 9,
+    "mobile_device_model": "Eten M600+",
+    "price_inr": 4979,
+    "description": "Business-oriented smartphone with touchscreen and productivity features.",
+    "image": "https://via.placeholder.com/300x300?text=Eten+M600+"
+  },
+  {
+    "id": 10,
+    "mobile_device_model": "Oppo A31 (2015)",
+    "price_inr": 1660,
+    "description": "Reliable smartphone with clean design and balanced performance.",
+    "image": "https://via.placeholder.com/300x300?text=Oppo+A31+2015"
+  },
+
+  {
+    "id": 11,
+    "mobile_device_model": "OnePlus 15",
+    "price_inr": 85000,
+    "description": "Flagship smartphone offering smooth performance and premium build quality.",
+    "image": "https://i.pcmag.com/imagery/articles/036UGTdbJnfg2ho3tzG2gAm-1..v1759157734.jpg"
+  },
+  {
+    "id": 12,
+    "mobile_device_model": "oppo reno 8",
+    "price_inr": 30000,
+    "description": "Lightweight feature phone ideal for basic communication needs.",
+    "image": "https://sm.mashable.com/mashable_in/seo/default/oppo-reno8_ejdj.jpg"
+  },
+  {
+    "id": 13,
+    "mobile_device_model": "Samsung s25 ultra",
+    "price_inr": 112500,
+    "description": "Slim and elegant Samsung phone with dependable performance.",
+    "image": "https://media.secure-mobiles.com/website_engine/images/mobiles_2025/product-pages/river-contents/samsung/s25-family/s25-ultra/kv-s25U-desktop.png"
+  },
+  {
+    "id": 14,
+    "mobile_device_model": "Laptop",
+    "price_inr": 746,
+    "description": "Budget smartphone with large display and decent battery life.",
+    "image": "https://via.placeholder.com/300x300?text=Tecno+Spark+3+Pro"
+  },
+  {
+    "id": 15,
+    "mobile_device_model": "Plum Ram 7 - 3G",
+    "price_inr": 232,
+    "description": "Entry-level smartphone designed for basic apps and communication.",
+    "image": "https://via.placeholder.com/300x300?text=Plum+Ram+7+3G"
+  },
+
+  {
+    "id": 16,
+    "mobile_device_model": "Oppo R1x",
+    "price_inr": 1660,
+    "description": "Stylish Oppo smartphone with a focus on camera and design.",
+    "image": "https://via.placeholder.com/300x300?text=Oppo+R1x"
+  },
+  {
+    "id": 17,
+    "mobile_device_model": "Spice M-940n",
+    "price_inr": 497,
+    "description": "Basic feature phone suitable for calls and SMS usage.",
+    "image": "https://via.placeholder.com/300x300?text=Spice+M-940n"
+  },
+  {
+    "id": 18,
+    "mobile_device_model": "Philips W8578",
+    "price_inr": 3319,
+    "description": "Smartphone with solid battery backup and reliable performance.",
+    "image": "https://via.placeholder.com/300x300?text=Philips+W8578"
+  },
+  {
+    "id": 19,
+    "mobile_device_model": "Samsung Galaxy A7 Duos",
+    "price_inr": 7469,
+    "description": "Dual SIM smartphone with premium design and AMOLED display.",
+    "image": "https://via.placeholder.com/300x300?text=Samsung+Galaxy+A7+Duos"
+  },
+  {
+    "id": 20,
+    "mobile_device_model": "Realme Q2",
+    "price_inr": 1244,
+    "description": "Modern smartphone offering fast performance and 5G support.",
+    "image": "https://via.placeholder.com/300x300?text=Realme+Q2"
+  }
+]

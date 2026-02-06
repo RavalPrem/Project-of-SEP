@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | TechMart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b1629] text-white min-h-screen">
+
+  <div class="max-w-4xl mx-auto py-10 px-4">
+    <a href="/" class="text-sm text-blue-400 hover:underline">&larr; Back to Home</a>
+
+    <h1 class="text-3xl font-bold mt-4 mb-6">Your Cart</h1>
+
+    {% if not items %}
+      <p class="text-gray-300">Your cart is empty.</p>
+    {% else %}
+      <div class="bg-[#101f3a] rounded-xl p-6 shadow space-y-4">
+        {% for item in items %}
+          <div class="flex gap-4 border-b border-gray-800 pb-4">
+            <div class="w-24 h-24 rounded-lg overflow-hidden bg-black/30 flex-shrink-0">
+              {% if item.image %}
+                <img
+                  src="{{ item.image }}"
+                  alt="{{ item.name }}"
+                  class="w-full h-full object-cover"
+                />
+              {% else %}
+                <div class="w-full h-full flex items-center justify-center text-xs text-gray-400">
+                  No image
+                </div>
+              {% endif %}
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <h2 class="font-semibold text-base mb-1">{{ item.name }}</h2>
+                <p class="text-xs text-gray-400 mb-1">
+                  ₹ {{ '%.2f'|format(item.price) }} each
+                </p>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center gap-3">
+                  <a
+                    href="/cart/decrease/{{ item.id }}"
+                    class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-700 hover:bg-gray-600 text-lg"
+                  >
+                    −
+                  </a>
+                  <span class="min-w-[2rem] text-center font-semibold">
+                    {{ item.quantity }}
+                  </span>
+                  <a
+                    href="/cart/increase/{{ item.id }}"
+                    class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-700 hover:bg-gray-600 text-lg"
+                  >
+                    +
+                  </a>
+                </div>
+                <div class="text-right font-semibold">
+                  ₹ {{ '%.2f'|format(item.subtotal) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="pt-4 flex justify-between items-center">
+          <div class="text-sm text-gray-300">
+            Total items: <span class="font-semibold">{{ total_quantity }}</span>
+          </div>
+          <div class="text-xl font-bold">
+            Total: ₹ {{ '%.2f'|format(total_price) }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
+
+

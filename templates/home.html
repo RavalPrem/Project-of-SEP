@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechMart | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+    />
+    <style>
+      .swiper {
+        width: 100%;
+        height: calc(100vh - 80px); /* full screen below navbar */
+      }
+
+      .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        background: #101f3a;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .autoplay-progress {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index: 10;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: var(--swiper-theme-color);
+      }
+
+      .autoplay-progress svg {
+        --progress: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        stroke-width: 4px;
+        stroke: var(--swiper-theme-color);
+        fill: none;
+        stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+        stroke-dasharray: 125.6;
+        transform: rotate(-90deg);
+      }
+
+      /* product carousel (2nd slider) */
+      .product-swiper {
+        width: 100%;
+        height: auto;
+      }
+
+      .product-swiper .swiper-slide {
+        height: auto;
+        background: transparent;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0b1629] text-white min-h-screen">
+    <div id="app">
+      <header
+        id="navbar"
+        class="min-h-20 w-full bg-[#101f3a] flex items-center justify-between py-2 px-3"
+      >
+        <div id="LeftSide" class="flex px-2 text-white">
+          <div id="logo" class="flex justify-around items-center w-30">
+            <img src="{{ url_for('static', filename='javascript.svg') }}" alt="" />
+            <p class="font-semibold ml-2">TechMart</p>
+          </div>
+          <nav class="ml-4 flex items-center justify-around">
+            <ul class="w-60 flex items-center justify-around">
+              <li><a href="/" class="nav-link active">Home</a></li>
+              <li><a href="#" class="nav-link">Devices</a></li>
+              <li><a href="#" class="nav-link">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div id="SearchBarSide" class="flex-1 px-10 hidden lg:block text-white">
+          <div id="searchBarBox" class="relative flex items-center">
+            <input
+              type="text"
+              id="searchItems"
+              name="searchItems"
+              class="peer w-full rounded-full bg-[#232f48] text-white px-10 py-2 outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Search Items"
+            />
+            <span id="searchLogo" class="absolute left-3 r-0 peer-focus:text-blue-400 text-[grey]">
+              <svg
+                width="20px"
+                height="20px"
+                viewBox="0 0 0.6 0.6"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m0.425 0.425 0.125 0.125m-0.063 -0.281a0.219 0.219 0 1 1 -0.438 0 0.219 0.219 0 0 1 0.438 0"
+                  stroke="currentColor"
+                  stroke-width="0.05"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div id="rightSide" class="flex px-3 py-0.5 gap-4 items-center">
+          <div id="cart" class="flex items-center">
+            <a href="/cart" class="flex items-center">
+              <img src="{{ url_for('static', filename='icons/cart.svg') }}" alt="Cart" />
+            </a>
+          </div>
+
+          <div id="line" class="w-0.5 bg-[#424242] h-6"></div>
+
+          <div id="userAccount" class="flex items-center gap-3">
+            {% if 'user_id' in session %}
+              <div
+                id="AccButton"
+                class="flex gap-1 items-center text-white rounded-4xl"
+              >
+                <div id="profileRound" class="p2 rounded-full">
+                  <img src="{{ url_for('static', filename='icons/profile.svg') }}" alt="Profile" />
+                </div>
+                <div id="userName">
+                  {{ session.get('username', 'Account') }}
+                </div>
+              </div>
+              <a
+                href="/logout"
+                class="px-3 py-1 rounded-full bg-red-600 hover:bg-red-700 text-sm font-semibold"
+              >
+                Logout
+              </a>
+            {% else %}
+              <a
+                href="/login"
+                class="px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-sm font-semibold"
+              >
+                Login
+              </a>
+              <a
+                href="/register"
+                class="px-3 py-1 rounded-full bg-green-600 hover:bg-green-700 text-sm font-semibold"
+              >
+                Sign Up
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </header>
+
+      <main class="w-full py-0">
+        <!-- Hero Swiper with featured products -->
+        <section class="mb-10">
+          <div class="swiper mySwiper rounded-xl overflow-hidden">
+            <div class="swiper-wrapper">
+              {% for p in featured_products %}
+                <div class="swiper-slide">
+                  <div class="w-full h-full relative">
+                    <img
+                      src="{{ p.image }}"
+                      alt="{{ p.name }}"
+                      class="w-full h-full object-cover"
+                    />
+                    <!-- Bottom-only gradient + text panel (keeps image bright, text readable) -->
+                    <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+                      <div class="max-w-3xl">
+                        <h2 class="text-2xl font-bold mb-2">{{ p.name }}</h2>
+                        <p class="text-sm text-gray-100 mb-2 line-clamp-2">
+                          {{ p.description }}
+                        </p>
+                        <p class="text-lg font-semibold mb-3">
+                          ₹ {{ '%.2f'|format(p.price) }}
+                        </p>
+                        <div class="flex gap-3">
+                          <a
+                            href="/product/{{ p.id }}"
+                            class="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold"
+                          >
+                            View details
+                          </a>
+                          <a
+                            href="/add_to_cart/{{ p.id }}"
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-semibold"
+                          >
+                            Add to Cart
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+            <div class="autoplay-progress">
+              <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="20"></circle>
+              </svg>
+              <span></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2nd slider: Amazon-style product carousel (from product1.json) -->
+        <section class="max-w-6xl mx-auto px-4 pb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl sm:text-2xl font-bold">Top Picks For You</h2>
+          </div>
+
+          <div class="swiper productSwiper product-swiper">
+            <div class="swiper-wrapper">
+              {% for item in product1_items %}
+                <div class="swiper-slide">
+                  <div class="bg-[#101f3a] rounded-xl overflow-hidden shadow hover:shadow-lg transition">
+                    <a href="/product/{{ item.id }}" class="block">
+                      <div class="h-48 bg-black/20">
+                        <img
+                          src="{{ item.image }}"
+                          alt="{{ item.mobile_device_model }}"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div class="p-4">
+                        <div class="font-semibold text-base leading-snug line-clamp-2">
+                          {{ item.mobile_device_model }}
+                        </div>
+                        <div class="mt-2 font-bold">
+                          ₹ {{ '%.2f'|format(item.price_inr) }}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+        </section>
+
+        <!-- Products grid below the swiper -->
+        <section class="max-w-6xl mx-auto px-4 py-10">
+          <h2 class="text-2xl font-bold mb-6">Latest Products</h2>
+
+          {% if products %}
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {% for product in products %}
+                <div class="bg-[#101f3a] rounded-xl p-4 shadow">
+                  {% if product.image %}
+                    <div class="mb-3 h-48 w-full overflow-hidden rounded-lg">
+                      <img
+                        src="{{ product.image }}"
+                        alt="{{ product.name }}"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  {% endif %}
+                  <a 
+                    href="/product/{{ product.id }}" 
+                    class="text-lg font-semibold mb-2 block hover:underline"
+                  >
+                    {{ product.name }}
+                  </a>
+                  <p class="text-gray-300 mb-3">
+                    {{ product.description }}
+                  </p>
+                  <p class="font-bold mb-4">
+                    ₹ {{ '%.2f'|format(product.price) }}
+                  </p>
+                  <a
+                    href="/add_to_cart/{{ product.id }}"
+                    class="inline-block bg-blue-600 hover:bg-blue-700 text-sm font-semibold px-4 py-2 rounded-lg"
+                  >
+                    Add to Cart
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-gray-300">No products available.</p>
+          {% endif %}
+        </section>
+      </main>
+    </div>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script>
+      const progressCircle = document.querySelector(".autoplay-progress svg");
+      const progressContent = document.querySelector(".autoplay-progress span");
+      const heroSwiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        on: {
+          autoplayTimeLeft(_, time, progress) {
+            if (!progressCircle || !progressContent) return;
+            progressCircle.style.setProperty("--progress", 1 - progress);
+            progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+          },
+        },
+      });
+
+      const productSwiper = new Swiper(".productSwiper", {
+        slidesPerView: 1.2,
+        spaceBetween: 14,
+        navigation: {
+          nextEl: ".productSwiper .swiper-button-next",
+          prevEl: ".productSwiper .swiper-button-prev",
+        },
+        breakpoints: {
+          640: { slidesPerView: 2.2, spaceBetween: 16 },
+          768: { slidesPerView: 3.2, spaceBetween: 18 },
+          1024: { slidesPerView: 4.2, spaceBetween: 20 },
+        },
+      });
+    </script>
+  </body>
+</html>
