@@ -6,6 +6,10 @@ import json
 app = Flask(__name__)
 app.secret_key = "secret123"
 
+# ---------------- IN-MEMORY PRODUCT CACHE ----------------
+
+_products_cache = {}
+
 # ---------------- DATABASE CONNECTION ----------------
 
 def get_db():
@@ -14,30 +18,69 @@ def get_db():
 
 # ---------------- PRODUCTS FROM JSON ----------------
 
-def load_all_products():
-    """Load all products from product1.json and product2.json as a unified list of dicts."""
-    products = []
-    for filename in ("product1.json", "product2.json"):
-        try:
-            with open(filename, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except FileNotFoundError:
-            continue
+def _load_products_from_files():
+    """Private function: Load products from JSON files and organize by category."""
+    products = {"phones": [], "laptops": []}
 
-        for item in data:
-            products.append({
-                "id": item.get("id"),
-                "name": item.get("mobile_device_model"),
-                "price": item.get("price_inr"),
-                "description": item.get("description"),
-                "image": item.get("image"),
-            })
+    # Load phones
+    try:
+        with open("product_phones.json", "r", encoding="utf-8") as f:
+            phone_data = json.load(f)
+            for item in phone_data:
+                products["phones"].append({
+                    "id": item.get("id"),
+                    "name": item.get("mobile_device_model"),
+                    "price": item.get("price_inr"),
+                    "description": item.get("description"),
+                    "image": item.get("image"),
+                })
+    except FileNotFoundError:
+        pass
+
+    # Load laptops
+    try:
+        with open("product_laptops.json", "r", encoding="utf-8") as f:
+            laptop_data = json.load(f)
+            for item in laptop_data:
+                products["laptops"].append({
+                    "id": item.get("id"),
+                    "name": item.get("mobile_device_model"),
+                    "price": item.get("price_inr"),
+                    "description": item.get("description"),
+                    "image": item.get("image"),
+                })
+    except FileNotFoundError:
+        pass
+
     return products
 
 
+def get_cached_products(category=None):
+    """Get products from cache. Load from files if cache is empty.
+
+    Args:
+        category: None (all products), "phones", or "laptops"
+
+    Returns:
+        List of product dicts
+    """
+    global _products_cache
+
+    # Populate cache if empty
+    if not _products_cache:
+        _products_cache = _load_products_from_files()
+
+    # Return specific category
+    if category:
+        return _products_cache.get(category, [])
+
+    # Return all products (phones + laptops combined)
+    return _products_cache.get("phones", []) + _products_cache.get("laptops", [])
+
+
 def get_product_by_id(pid: int):
-    """Find a single product dict by id from the JSON data."""
-    for product in load_all_products():
+    """Find a single product dict by id from the cached data."""
+    for product in get_cached_products():
         if product.get("id") == pid:
             return product
     return None
@@ -47,28 +90,71 @@ def get_product_by_id(pid: int):
 
 @app.route('/')
 def home():
-    # products and featured slider data from JSON (not from database)
-    products = load_all_products()
+    # Get all products from cache (no file I/O after first request)
+    products = get_cached_products()
 
-    # use last 10 products as featured for the top slider
+    # Use last 10 products as featured for the top slider
     if len(products) > 10:
         featured_products = products[-10:]
     else:
         featured_products = products
 
-    # load product1.json for the 2nd slider (Amazon-style carousel)
-    try:
-        with open("product1.json", "r", encoding="utf-8") as f:
-            product1_items = json.load(f)
-    except FileNotFoundError:
-        product1_items = []
+    # Get phone products for the 2nd slider (Amazon-style carousel)
+    product1_items = get_cached_products("phones")
+
+    # Limit products grid to first 24 for better initial page load
+    initial_products = products[:24]
 
     return render_template(
         "home.html",
-        products=products,
+        products=initial_products,
         featured_products=featured_products,
         product1_items=product1_items,
     )
+
+# ---------------- DEVICE FILTER PAGES ----------------
+
+@app.route('/devices/phones')
+def devices_phones():
+    """Show only phone products."""
+    # Get only phone products from cache
+    products = get_cached_products("phones")
+
+    # Featured: last 10 phone products
+    if len(products) > 10:
+        featured_products = products[-10:]
+    else:
+        featured_products = products
+
+    return render_template(
+        "devices.html",
+        products=products,
+        featured_products=featured_products,
+        category="Phones",
+        device_type="phones"
+    )
+
+
+@app.route('/devices/laptops')
+def devices_laptops():
+    """Show only laptop products."""
+    # Get only laptop products from cache
+    products = get_cached_products("laptops")
+
+    # Featured: last 10 laptop products
+    if len(products) > 10:
+        featured_products = products[-10:]
+    else:
+        featured_products = products
+
+    return render_template(
+        "devices.html",
+        products=products,
+        featured_products=featured_products,
+        category="Laptops",
+        device_type="laptops"
+    )
+
 
 # ---------------- REGISTER ----------------
 
@@ -185,8 +271,8 @@ def cart():
     if not product_ids:
         return render_template("cart.html", items=[], total_quantity=0, total_price=0)
 
-    # load product data from JSON instead of database
-    all_products = load_all_products()
+    # load product data from cache instead of files
+    all_products = get_cached_products()
     products_by_id = {p["id"]: p for p in all_products}
 
     items = []
@@ -296,7 +382,7 @@ def orders():
     rows = cursor.fetchall()
     db.close()
 
-    all_products = load_all_products()
+    all_products = get_cached_products()
     products_by_id = {p["id"]: p for p in all_products}
 
     orders_data = []

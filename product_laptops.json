@@ -1,0 +1,72 @@
+[
+  {
+    "id": 215,
+    "mobile_device_model": "Dell XPS 15",
+    "price_inr": 125000,
+    "description": "Premium laptop with 15.6-inch 4K OLED display, Intel Core i7 processor, and NVIDIA GeForce RTX graphics.",
+    "image": "https://via.placeholder.com/300x300?text=Dell+XPS+15"
+  },
+  {
+    "id": 216,
+    "mobile_device_model": "MacBook Pro 14",
+    "price_inr": 195000,
+    "description": "Apple's powerful laptop with M3 chip, stunning Liquid Retina XDR display, and all-day battery life.",
+    "image": "https://via.placeholder.com/300x300?text=MacBook+Pro+14"
+  },
+  {
+    "id": 217,
+    "mobile_device_model": "HP Pavilion 15",
+    "price_inr": 55000,
+    "description": "Versatile laptop for everyday use with AMD Ryzen 5 processor, 8GB RAM, and 512GB SSD.",
+    "image": "https://via.placeholder.com/300x300?text=HP+Pavilion+15"
+  },
+  {
+    "id": 218,
+    "mobile_device_model": "Lenovo ThinkPad X1 Carbon",
+    "price_inr": 145000,
+    "description": "Business-class ultrabook with Intel Core i7, 16GB RAM, and military-grade durability.",
+    "image": "https://via.placeholder.com/300x300?text=Lenovo+ThinkPad"
+  },
+  {
+    "id": 219,
+    "mobile_device_model": "ASUS ROG Strix G15",
+    "price_inr": 135000,
+    "description": "Gaming laptop with AMD Ryzen 9, NVIDIA RTX 4060, 165Hz display, and RGB keyboard.",
+    "image": "https://via.placeholder.com/300x300?text=ASUS+ROG+Strix"
+  },
+  {
+    "id": 220,
+    "mobile_device_model": "Acer Aspire 5",
+    "price_inr": 42000,
+    "description": "Budget-friendly laptop with Intel Core i5, 8GB RAM, perfect for students and casual users.",
+    "image": "https://via.placeholder.com/300x300?text=Acer+Aspire+5"
+  },
+  {
+    "id": 221,
+    "mobile_device_model": "Microsoft Surface Laptop 5",
+    "price_inr": 110000,
+    "description": "Sleek and elegant laptop with touchscreen display, Intel Core i5, and premium build quality.",
+    "image": "https://via.placeholder.com/300x300?text=Surface+Laptop+5"
+  },
+  {
+    "id": 222,
+    "mobile_device_model": "MSI Creator Z16",
+    "price_inr": 165000,
+    "description": "Content creator's laptop with 16-inch QHD+ display, Intel Core i9, and NVIDIA RTX graphics.",
+    "image": "https://via.placeholder.com/300x300?text=MSI+Creator"
+  },
+  {
+    "id": 223,
+    "mobile_device_model": "Lenovo IdeaPad Slim 3",
+    "price_inr": 38000,
+    "description": "Affordable thin and light laptop with AMD Ryzen 5, ideal for everyday productivity.",
+    "image": "https://via.placeholder.com/300x300?text=IdeaPad+Slim"
+  },
+  {
+    "id": 224,
+    "mobile_device_model": "Razer Blade 15",
+    "price_inr": 185000,
+    "description": "Premium gaming laptop with Intel Core i7, RTX 4070, 240Hz display, and CNC aluminum chassis.",
+    "image": "https://via.placeholder.com/300x300?text=Razer+Blade+15"
+  }
+]

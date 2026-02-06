@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TechMart | Home</title>
+    <title>TechMart | {{ category }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Swiper CSS -->
     <link
@@ -58,18 +58,6 @@
         stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
         stroke-dasharray: 125.6;
         transform: rotate(-90deg);
-      }
-
-      /* product carousel (2nd slider) */
-      .product-swiper {
-        width: 100%;
-        height: auto;
-      }
-
-      .product-swiper .swiper-slide {
-        height: auto;
-        background: transparent;
-        display: block;
       }
 
       /* Dropdown menu styles */
@@ -140,9 +128,9 @@
           </div>
           <nav class="ml-4 flex items-center justify-around">
             <ul class="w-60 flex items-center justify-around">
-              <li><a href="/" class="nav-link active">Home</a></li>
+              <li><a href="/" class="nav-link">Home</a></li>
               <li class="relative group">
-                <a href="#" class="nav-link">Devices ▼</a>
+                <a href="#" class="nav-link active">Devices ▼</a>
                 <div class="dropdown-menu">
                   <a href="/devices/phones">Phones</a>
                   <a href="/devices/laptops">Laptops</a>
@@ -229,7 +217,19 @@
       </header>
 
       <main class="w-full py-0">
-        <!-- Hero Swiper with featured products -->
+        <!-- Breadcrumb -->
+        <div class="max-w-6xl mx-auto px-4 py-4">
+          <nav class="text-sm text-gray-400">
+            <a href="/" class="hover:text-white">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="#" class="hover:text-white">Devices</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-white">{{ category }}</span>
+          </nav>
+        </div>
+
+        {% if featured_products %}
+        <!-- Hero Swiper with featured products from selected category -->
         <section class="mb-10">
           <div class="swiper mySwiper rounded-xl overflow-hidden">
             <div class="swiper-wrapper">
@@ -282,48 +282,11 @@
             </div>
           </div>
         </section>
+        {% endif %}
 
-        <!-- 2nd slider: Amazon-style product carousel (from product1.json) -->
-        <section class="max-w-6xl mx-auto px-4 pb-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl sm:text-2xl font-bold">Top Picks For You</h2>
-          </div>
-
-          <div class="swiper productSwiper product-swiper">
-            <div class="swiper-wrapper">
-              {% for item in product1_items %}
-                <div class="swiper-slide">
-                  <div class="bg-[#101f3a] rounded-xl overflow-hidden shadow hover:shadow-lg transition">
-                    <a href="/product/{{ item.id }}" class="block">
-                      <div class="h-48 bg-black/20">
-                        <img
-                          src="{{ item.image }}"
-                          alt="{{ item.mobile_device_model }}"
-                          class="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div class="p-4">
-                        <div class="font-semibold text-base leading-snug line-clamp-2">
-                          {{ item.mobile_device_model }}
-                        </div>
-                        <div class="mt-2 font-bold">
-                          ₹ {{ '%.2f'|format(item.price_inr) }}
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          </div>
-        </section>
-
-        <!-- Products grid below the swiper -->
+        <!-- Products grid -->
         <section class="max-w-6xl mx-auto px-4 py-10">
-          <h2 class="text-2xl font-bold mb-6">Latest Products</h2>
+          <h2 class="text-2xl font-bold mb-6">All {{ category }}</h2>
 
           {% if products %}
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -338,8 +301,8 @@
                       />
                     </div>
                   {% endif %}
-                  <a 
-                    href="/product/{{ product.id }}" 
+                  <a
+                    href="/product/{{ product.id }}"
                     class="text-lg font-semibold mb-2 block hover:underline"
                   >
                     {{ product.name }}
@@ -360,7 +323,12 @@
               {% endfor %}
             </div>
           {% else %}
-            <p class="text-gray-300">No products available.</p>
+            <div class="text-center py-20">
+              <p class="text-gray-300 text-lg">No {{ device_type }} available at the moment.</p>
+              <a href="/" class="mt-4 inline-block text-blue-400 hover:underline">
+                &larr; Back to Home
+              </a>
+            </div>
           {% endif %}
         </section>
       </main>
@@ -368,6 +336,7 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
+      {% if featured_products %}
       const progressCircle = document.querySelector(".autoplay-progress svg");
       const progressContent = document.querySelector(".autoplay-progress span");
       const heroSwiper = new Swiper(".mySwiper", {
@@ -393,20 +362,7 @@
           },
         },
       });
-
-      const productSwiper = new Swiper(".productSwiper", {
-        slidesPerView: 1.2,
-        spaceBetween: 14,
-        navigation: {
-          nextEl: ".productSwiper .swiper-button-next",
-          prevEl: ".productSwiper .swiper-button-prev",
-        },
-        breakpoints: {
-          640: { slidesPerView: 2.2, spaceBetween: 16 },
-          768: { slidesPerView: 3.2, spaceBetween: 18 },
-          1024: { slidesPerView: 4.2, spaceBetween: 20 },
-        },
-      });
+      {% endif %}
 
       // Mobile dropdown toggle
       if (window.innerWidth < 768) {
