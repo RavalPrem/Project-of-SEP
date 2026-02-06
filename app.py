@@ -100,10 +100,12 @@ def home():
         featured_products = products
 
     # Get phone products for the 2nd slider (Amazon-style carousel)
-    product1_items = get_cached_products("phones")
+    # Limit to first 12 phones for faster loading
+    phone_products = get_cached_products("phones")
+    product1_items = phone_products[:12] if len(phone_products) > 12 else phone_products
 
-    # Limit products grid to first 24 for better initial page load
-    initial_products = products[:24]
+    # Limit products grid to first 12 for better initial page load
+    initial_products = products[:12]
 
     return render_template(
         "home.html",

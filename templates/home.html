@@ -72,6 +72,24 @@
         display: block;
       }
 
+      /* Navigation link styles */
+      .nav-link {
+        padding: 0.5rem 1rem;
+        color: white;
+        text-decoration: none;
+        transition: color 0.2s;
+        cursor: pointer;
+      }
+
+      .nav-link:hover {
+        color: #60a5fa;
+      }
+
+      .nav-link.active {
+        color: #60a5fa;
+        font-weight: 600;
+      }
+
       /* Dropdown menu styles */
       .dropdown-menu {
         position: absolute;
@@ -298,16 +316,16 @@
                       <div class="h-48 bg-black/20">
                         <img
                           src="{{ item.image }}"
-                          alt="{{ item.mobile_device_model }}"
+                          alt="{{ item.name }}"
                           class="w-full h-full object-cover"
                         />
                       </div>
                       <div class="p-4">
                         <div class="font-semibold text-base leading-snug line-clamp-2">
-                          {{ item.mobile_device_model }}
+                          {{ item.name }}
                         </div>
                         <div class="mt-2 font-bold">
-                          ₹ {{ '%.2f'|format(item.price_inr) }}
+                          ₹ {{ '%.2f'|format(item.price) }}
                         </div>
                       </div>
                     </a>
